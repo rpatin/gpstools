@@ -28,7 +28,7 @@ print.timeline <- function(x){
             "\n Median Burst Duration : ", printday(medLength),
             "\n Maximum Burst Duration : ", printday(maxLength),
             "\n Number of bins : ",x$maxdist/x$binsize,sep=""))
-  if(is.na(x$activity))
+  if(!is.data.frame(x$activity))
   {
     cat("\n No Activity Data")
   } else {
