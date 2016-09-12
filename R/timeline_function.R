@@ -83,7 +83,7 @@ create_timeline <- function(df,burstcol="burstname",idcol="id",timecol="expectTi
   }
   output <- list("main"=out2,
                  "activity"=out.act2,
-                 "color"=color)
+                 "idplots"=idplots)
   class(output) <- "timeline"
   return(output)
 }
