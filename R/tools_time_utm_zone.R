@@ -64,3 +64,24 @@ CRS_UTM_zone <- Vectorize(function(latitude, longitude) {
       ' +datum=WGS84 +units=m +no_defs'
     )
 })
+
+#' Convert POSIXct objects to a new timezone
+#'
+#' \code{changeTZ} change the timezone of a POSIXct objects
+#' @param x a POSIXct object
+#' @param newTZ a valid timezone
+#' @return a POSIXct objects with datetime in newTZ timezone
+#' @examples
+#' changeTZ(x,"Africa/Harare")
+#' @export
+
+changeTZ <- function(x,newTZ){
+  return(
+    as.POSIXct(strptime(
+      format(x, tz = newTZ),
+      "%Y-%m-%d %H:%M:%S",
+      tz = newTZ
+    ))
+  )
+}
+
