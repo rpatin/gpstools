@@ -85,3 +85,28 @@ changeTZ <- function(x,newTZ){
   )
 }
 
+
+#' Get Julian Day
+#'
+#' \code{get_julian} calculate julian day of a POSIXct object.
+#' @param x a POSIXct object
+#' @param origin facultative date object for origin of julian days. Default January, 1st 2000.
+#' @return a numeric object with days passed since origin
+#' @examples
+#' changeTZ(x,"Africa/Harare")
+#' @export
+
+get_julian <- function(x, origin = NULL) {
+  if (is.null(origin)) {
+    TZ <- attr(x,"tzone")
+    origin =  as.POSIXct(strptime(
+      paste("2000", "-01-01 00:00:01", sep = ""),
+      "%Y-%m-%d %H:%M:%S"
+    ), tz = TZ)
+  }
+  julday = floor(julian(x,origin=origin))
+  julday = as.numeric(julday)
+  return(julday)
+}
+
+
