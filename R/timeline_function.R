@@ -14,7 +14,7 @@
 #' @return a \code{\link{timeline}}
 #' @examples
 #' data("hwzebra")
-#' create_timeline(hwzebra)
+#' timeline(hwzebra)
 #' @export
 #
 # data("hwzebra")
@@ -33,7 +33,7 @@
 # sep=7;unit='days'
 # x <- create_timeline(df=df,actdf=actdf,color="burst")
 
-create_timeline <- function(df,burstcol="burstname",idcol="id",timecol="expectTime",color=NULL,actdf=NULL,acttimecol="dateTime",sep=7,unit='days') {
+timeline <- function(df,burstcol="burstname",idcol="id",timecol="expectTime",color=NULL,actdf=NULL,acttimecol="dateTime",sep=7,unit='days') {
 
   if(is.null(color)){
     df$color <- 1
