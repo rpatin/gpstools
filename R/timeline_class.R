@@ -77,9 +77,15 @@ plot.timeline <- function(x,theme=NULL) {
     g <- g +  ggplot2::geom_segment(ggplot2::aes(x=startPeriod, xend=endPeriod, y=ybis+.1, yend=ybis+.1),col='grey40', size=2.5)
   } else {
     g <- g +  ggplot2::geom_segment(ggplot2::aes(x=startPeriod, xend=endPeriod, y=ybis+.1, yend=ybis+.1,col=burst), size=2.5)
-    }
+  }
 
-   g <- g+ggplot2::xlab("Time") + ggplot2::ylab("Animal IDs")+ ggplot2::scale_y_continuous(labels = x$idplots,breaks=1:max(out2$ybis))
+  if(any(duplicated(out2$id))){
+    idplots <-   out2$id[-which(duplicated(out2$id))]
+  } else {
+    idplots <-   out2$id
+  }
+
+   g <- g+ggplot2::xlab("Time") + ggplot2::ylab("Animal IDs")+ ggplot2::scale_y_continuous(labels = idplots,breaks=1:max(out2$ybis))
 
   if(is.null(theme)) {
     g <- g + ggplot2::theme_bw()

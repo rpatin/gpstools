@@ -62,8 +62,6 @@ timeline <- function(df,burstcol="burstname",idcol="id",timecol="expectTime",col
   out2 <- dplyr::mutate(out2,plotid = paste(y,id,sep="-"))
   # levels(out$id)<- as.character(sort$id)
   out2 <- dplyr::arrange(out2,plotid)
-  idplots <- out2$id[-which(duplicated(out2$id))]
-
 
 
   if (!is.null(actdf)) {
@@ -82,8 +80,7 @@ timeline <- function(df,burstcol="burstname",idcol="id",timecol="expectTime",col
     out.act2 <- NA
   }
   output <- list("main"=out2,
-                 "activity"=out.act2,
-                 "idplots"=idplots)
+                 "activity"=out.act2)
   class(output) <- "timeline"
   return(output)
 }
