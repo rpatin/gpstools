@@ -3,6 +3,7 @@
 S3method(plot,timeline)
 S3method(print,timeline)
 export(CRS_UTM_zone)
+export(FormatDateTime)
 export(GetLetter)
 export(UTM_zone)
 export(changeTZ)

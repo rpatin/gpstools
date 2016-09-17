@@ -109,4 +109,37 @@ get_julian <- function(x, origin = NULL) {
   return(julday)
 }
 
+#' Format Date Time character string to POSIXct
+#'
+#' \code{FormatDateTime} automatically format Date Time objects into POSIXct. It assumes the dateTime character string can take a limited number of format : "%d/%m/%Y %H:%M:%S" ; "%m/%d/%Y %H:%M:%S" ; "%m/%d/%Y %I:%M:%S %p" ; "%d/%m/%Y %I:%M:%S %p"
+#' @param x a character vector
+#' @param TZ the timezone of the object. Default GMT
+#' @return a POSIXct object
+#' @examples
+#' FormatDateTime(x)
+#' @export
+
+# test <- read.csv("../testDateTime.csv")
+# x <- paste(test$UTC_Date,test$UTC_Time)
+
+FormatDateTime <- function(x, TZ = "Etc/GMT") {
+
+  AMPM <- grepl(pattern = "AM", x = first(x)) |
+    grepl(pattern = "PM", x = first(x))
+
+  subx <- plyr::ldply(strsplit(x = x,split = "/",fixed = T),function(y){
+    return(as.numeric(y[1]))
+  })
+  monthfirst <- max(subx$V1) <= 12
+
+  formatDate <- ifelse(monthfirst,"%m/%d/%Y","%d/%m/%Y")
+  formatTime <- ifelse(AMPM,"%I:%M:%S %p","%H:%M:%S")
+
+  formatting <- paste(formatDate,formatTime)
+  x_POSIXct <- as.POSIXct(strptime(paste(x),
+                                   format = formatting), tz = TZ)
+  return(x_POSIXct)
+}
+
+
 
