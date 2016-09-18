@@ -12,5 +12,6 @@ Imports:
     adehabitatLT (>= 0.3.21),
     plyr (>= 1.8.4),
     dplyr (>= 0.4.3),
-    ggplot2 (>= 2.1.0)
-
+    ggplot2 (>= 2.1.0),
+    rgdal (>= 1.1-10),
+    sp (>= 1.2-3)
