@@ -18,7 +18,7 @@
 #' @export
 
 
-write_shapefiles <- function(df, dir, KML = F, coord.x1 = "x", coord.x2 = "y", proj4string = "+proj=longlat +datum=WGS84 +no_defs", burst = "id",verbose=F){
+write_shapefiles <- function(df, dir, KML = FALSE, coord.x1 = "x", coord.x2 = "y", proj4string = "+proj=longlat +datum=WGS84 +no_defs", burst = "id",verbose=F){
 
 
   for (INDIV in unique(df[, burst])) {
