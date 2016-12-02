@@ -34,6 +34,9 @@
 #' pad.trajectory(xy,time,date.ref,dt,tol,correction.xy="cs",returnltraj=TRUE,idtraj="Zebra12",bursttraj="Zebra12_1h",Index)
 #' @export
 
+
+# pad.trajectory(xy = cbind(df$x,df$y),time = df$dateTime,date.ref = start,dt = sampling_rate,tol=tol,idtraj=first(df$id),bursttraj = first(df$burst),Index=df$Indexing,correction.xy = "cs",max_sampling = 60)
+
 pad.trajectory <- function(xy, time, date.ref, dt, tol, correction.xy=c("none", "cs"), returnltraj=FALSE, idtraj=NULL, bursttraj=NULL, Index=NULL,max_sampling=NULL){
 
   if (isTRUE(returnltraj) & (is.null(idtraj) | is.null(bursttraj))) {
@@ -57,7 +60,7 @@ pad.trajectory <- function(xy, time, date.ref, dt, tol, correction.xy=c("none", 
   # for each real location find the closest (in time) expected one within a tol tolerance
   # in this version of the function I made it (a bit) faster by not going through all alltimes
   s <- 1; n <- length(alltimes)
-  if(!is.null(max_sampling)) {n <- s+max_sampling}
+  if(!is.null(max_sampling)) {n <- min(s+max_sampling,length(alltimes))}
 
   for (i in 1:length(time)) {
     alldt <-
@@ -91,7 +94,7 @@ pad.trajectory <- function(xy, time, date.ref, dt, tol, correction.xy=c("none", 
         }
       }
       s <- id
-      if(!is.null(max_sampling)) {n <- s+max_sampling}
+      if(!is.null(max_sampling)) {n <- min(s+max_sampling,length(alltimes))}
 
     }
   }
