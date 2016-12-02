@@ -26,6 +26,7 @@
 #' @param bursttraj the burst used to identify the ltraj object
 #' @param Index corresponding to the line in the original dataframe i.e. used
 #'   afterwards to retrieve  other attributes from the original data.
+#' @param max_sampling if you want not to calculate all time differences
 #' @return  a dataframe or ltraj object with theoretical hour of acquisition and
 #'   real location.
 #'
@@ -33,7 +34,7 @@
 #' pad.trajectory(xy,time,date.ref,dt,tol,correction.xy="cs",returnltraj=TRUE,idtraj="Zebra12",bursttraj="Zebra12_1h",Index)
 #' @export
 
-pad.trajectory <- function(xy, time, date.ref, dt, tol, correction.xy=c("none", "cs"), returnltraj=FALSE, idtraj=NULL, bursttraj=NULL, Index=NULL){
+pad.trajectory <- function(xy, time, date.ref, dt, tol, correction.xy=c("none", "cs"), returnltraj=FALSE, idtraj=NULL, bursttraj=NULL, Index=NULL,max_sampling=NULL){
 
   if (isTRUE(returnltraj) & (is.null(idtraj) | is.null(bursttraj))) {
       cat("Please provide idtraj and burstraj, they are needed in order to return ltraj objects")
@@ -56,6 +57,8 @@ pad.trajectory <- function(xy, time, date.ref, dt, tol, correction.xy=c("none", 
   # for each real location find the closest (in time) expected one within a tol tolerance
   # in this version of the function I made it (a bit) faster by not going through all alltimes
   s <- 1; n <- length(alltimes)
+  if(!is.null(max_sampling)) {n <- s+max_sampling}
+
   for (i in 1:length(time)) {
     alldt <-
       abs(as.numeric(difftime(time[i], alltimes[s:n], units = "mins")))
@@ -88,6 +91,8 @@ pad.trajectory <- function(xy, time, date.ref, dt, tol, correction.xy=c("none", 
         }
       }
       s <- id
+      if(!is.null(max_sampling)) {n <- s+max_sampling}
+
     }
   }
 
