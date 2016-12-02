@@ -4,7 +4,7 @@
 \alias{write_shapefiles}
 \title{Write points and lines shapefiles for movement data/}
 \usage{
-write_shapefiles(df, dir, KML = F, coord.x1 = "x", coord.x2 = "y",
+write_shapefiles(df, dir, KML = FALSE, coord.x1 = "x", coord.x2 = "y",
   proj4string = "+proj=longlat +datum=WGS84 +no_defs", burst = "id",
   verbose = F)
 }

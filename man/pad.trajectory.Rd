@@ -5,7 +5,8 @@
 \title{Regularize irregular trajects and/or subsample trajects}
 \usage{
 pad.trajectory(xy, time, date.ref, dt, tol, correction.xy = c("none", "cs"),
-  returnltraj = FALSE, idtraj = NULL, bursttraj = NULL, Index = NULL)
+  returnltraj = FALSE, idtraj = NULL, bursttraj = NULL, Index = NULL,
+  max_sampling = NULL)
 }
 \arguments{
 \item{xy}{matrix of locations}
@@ -30,6 +31,8 @@ data frame}
 
 \item{Index}{corresponding to the line in the original dataframe i.e. used
 afterwards to retrieve  other attributes from the original data.}
+
+\item{max_sampling}{if you want not to calculate all time differences}
 }
 \value{
 a dataframe or ltraj object with theoretical hour of acquisition and
