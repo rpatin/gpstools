@@ -35,7 +35,7 @@
 #' @export
 
 
-# pad.trajectory(xy = cbind(df$x,df$y),time = df$dateTime,date.ref = start,dt = sampling_rate,tol=tol,idtraj=first(df$id),bursttraj = first(df$burst),Index=df$Indexing,correction.xy = "cs",max_sampling = 60)
+# tmp <-  pad.trajectory(xy = cbind(df$x,df$y),time = df$dateTime,date.ref = start,dt = 5,tol=tol,idtraj=first(df$id),bursttraj = first(df$burst),Index=df$Indexing,correction.xy = "none",max_sampling=60)
 
 pad.trajectory <- function(xy, time, date.ref, dt, tol, correction.xy=c("none", "cs"), returnltraj=FALSE, idtraj=NULL, bursttraj=NULL, Index=NULL,max_sampling=NULL){
 
@@ -60,18 +60,23 @@ pad.trajectory <- function(xy, time, date.ref, dt, tol, correction.xy=c("none", 
   # for each real location find the closest (in time) expected one within a tol tolerance
   # in this version of the function I made it (a bit) faster by not going through all alltimes
   s <- 1; n <- length(alltimes)
-  if(!is.null(max_sampling)) {n <- min(s+max_sampling,length(alltimes))}
+  if(!is.null(max_sampling)) {
+    n <- min(s+max_sampling,length(alltimes))
+    diffrealtime <- c(0,difftime(time[2:length(time)],time[1:(length(time)-1)],units="mins"))
+  }
 
   for (i in 1:length(time)) {
-    alldt <-
-      abs(as.numeric(difftime(time[i], alltimes[s:n], units = "mins")))
+
+    if(!is.null(max_sampling)) {
+      n <- min(length(alltimes),n+ceiling(diffrealtime[i]/dt))
+    }
+    alldt <- abs(as.numeric(difftime(time[i], alltimes[s:n], units = "mins")))
     if (min(alldt) <= tol) {
       # is there an expected locations within tol from the real location?
       id <- which.min(alldt) + s - 1
       if (is.na(paddedxy[id, 1])) {
         # has another real point already be placed at this expected loc?
-        realtimes[id] <-
-          time[i]
+        realtimes[id] <-  time[i]
         paddedxy[id, ] <- xy[i, ] # if not, then place this one
         if (!is.null(Index)) {
           indices[id] <- Index[i]
@@ -110,10 +115,10 @@ pad.trajectory <- function(xy, time, date.ref, dt, tol, correction.xy=c("none", 
     }
     newtraj <-
       adehabitatLT::sett0(trajtemp,
-                          date.ref,
-                          dt,
+                          date.ref=date.ref,
+                          dt=dt,
                           correction.xy = "cs",
-                          tol,
+                          tol=150,
                           units = "min")
   }
 
@@ -130,8 +135,8 @@ pad.trajectory <- function(xy, time, date.ref, dt, tol, correction.xy=c("none", 
       return(data.frame(
         expectTime = alltimes,
         realTime = alltimes,
-        x = newtraj[[1]][, 1],
-        y = newtraj[[1]][, 2]
+        x = newtraj[[1]]$x,
+        y = newtraj[[1]]$y
       ))
     } else {
       df <-
