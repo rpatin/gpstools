@@ -33,6 +33,8 @@
 # sep=7;unit='days'
 # x <- create_timeline(df=df,actdf=actdf,color="burst")
 
+# load("../workspace_timeline.rda")
+
 timeline <- function(df,burstcol="burstname",idcol="id",timecol="expectTime",color=NULL,actdf=NULL,acttimecol="dateTime",sep=7,unit='days') {
 
   if(is.null(color)){
@@ -43,14 +45,14 @@ timeline <- function(df,burstcol="burstname",idcol="id",timecol="expectTime",col
         extractPeriods(
           x[,timecol],
           id = dplyr::first(x[, idcol]),
-          burst = first(x[, color]),
+          burst = dplyr::first(x[, color]),
           sep = sep,
           unit = unit
         )
     })",sep="")))
   out.split <- split(out,out[,idcol])
-  sorting <- lapply(out.split,function(x){x <- arrange(x,startPeriod)
-  return(data.frame(id=first(x[,idcol]),start=first(x$startPeriod)))})
+  sorting <- lapply(out.split,function(x){x <- dplyr::arrange(x,startPeriod)
+  return(data.frame(id=dplyr::first(x[,idcol]),start=dplyr::first(x$startPeriod)))})
   sort <- do.call('rbind',sorting)
   sort <- dplyr::arrange(sort,start)
   sort$y <- GetLetter(nrow(sort))
