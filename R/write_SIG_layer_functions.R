@@ -22,7 +22,7 @@ write_shapefiles <- function(df, dir, KML = FALSE, coord.x1 = "x", coord.x2 = "y
 
 
   for (INDIV in unique(df[, burst])) {
-    if(verbose){ cat(paste("\n",INDIV,"\n",sep=""))}
+    if(verbose){ message(paste("\n",INDIV,"\n",sep=""))}
     subdf <-
       eval(parse(text = paste(
         "dplyr::filter(df,!is.na(", coord.x1, "),
