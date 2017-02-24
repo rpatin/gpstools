@@ -37,6 +37,9 @@
 
 timeline <- function(df,burstcol="burstname",idcol="id",timecol="expectTime",color=NULL,actdf=NULL,acttimecol="dateTime",sep=7,unit='days') {
 
+  evalstr <- paste("df <- dplyr::arrange(df,",idcol,",",burstcol,",",timecol,")",sep="")
+  eval(parse(text=evalstr))
+
   if(is.null(color)){
     df$color <- 1
     color = "color"
