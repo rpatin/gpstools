@@ -20,4 +20,3 @@ a POSIXct object
 \examples{
 FormatDateTime(x)
 }
-

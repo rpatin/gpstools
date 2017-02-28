@@ -1,13 +1,13 @@
 #' timeline class description
 #'
 #' @param x a \code{timeline} object generated for instance by
-#'   \code{\link{create_timeline}}
-#' @name timeline
+#'   \code{\link{timeline}}
+#' @name timeline-class
 NULL
 
 #' Print object of \code{timeline} class
 #'
-#' @rdname timeline
+#' @rdname timeline-class
 #' @export
 
 
@@ -52,7 +52,7 @@ print.timeline <- function(x){
 
 
 #' Plot object of \code{timeline} class
-#' @rdname timeline
+#' @rdname timeline-class
 #' @export
 
 #  x <- test.explo

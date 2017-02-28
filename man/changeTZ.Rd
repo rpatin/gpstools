@@ -20,4 +20,3 @@ a POSIXct objects with datetime in newTZ timezone
 \examples{
 changeTZ(x,"Africa/Harare")
 }
-

@@ -33,4 +33,3 @@ burst. One with points and one with lines.
 \examples{
 write_shapefiles(df,"SIG/")
 }
-

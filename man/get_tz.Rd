@@ -20,4 +20,3 @@ locations given.
 \examples{
 get_tz(150)
 }
-

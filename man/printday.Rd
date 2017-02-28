@@ -18,4 +18,3 @@ a character
 \examples{
 printday(450)
 }
-
