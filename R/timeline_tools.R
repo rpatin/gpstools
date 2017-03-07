@@ -45,7 +45,7 @@ extractPeriods <- function(x,sep=7,unit="days",id=NULL,burst=NULL){
   starts <- rep(NA,length(x)); starts[1] <- 1
   ends <- rep(NA,length(x)); ends[length(x)] <- 1
 
-  starts[s+1] <- 1; ends[s] <- 1
+  if(length(s)>0){starts[s+1] <- 1; ends[s] <- 1}
 
   periods <- 1:sum(starts,na.rm=T)
   startPeriod <- x[which(starts==1)]; endPeriod <- x[which(ends==1)]
