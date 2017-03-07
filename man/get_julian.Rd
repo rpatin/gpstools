@@ -20,3 +20,4 @@ a numeric object with days passed since origin
 \examples{
 changeTZ(x,"Africa/Harare")
 }
+

@@ -28,7 +28,8 @@ GetLetter = function(n){
 #' @return a dataframe with all periods and their date of begin (startPeriod) and end (endPeriod)
 #' @examples
 #' extractPeriods(x)
-
+#' @author Simon Chamaille-Jammes, \email{simon.chamaille@cefe.cnrs.fr}
+#'
 # sep =7
 # unit='days'
 # id= NULL
@@ -39,27 +40,46 @@ GetLetter = function(n){
 
 extractPeriods <- function(x,sep=7,unit="days",id=NULL,burst=NULL){
 
-  s <- which(difftime(x[-1],x[-length(x)],units=unit)>sep)
+  s <- which(difftime(x[-1],x[-length(x)],units="days")>sep)
 
-  startper <- rep(NA,length(x))
-  endper <- rep(NA,length(x))
-  startper[1] <- "start"
-  endper[length(x)] <- "end"
+  starts <- rep(NA,length(x)); starts[1] <- 1
+  ends <- rep(NA,length(x)); ends[length(x)] <- 1
 
-  if(length(s)>0){
-    endper[s] <- "end"
-    startper[s+1] <- "start"
-  }
+  starts[s+1] <- 1; ends[s] <- 1
 
-  periods <- 1:length(which(startper=="start"))
-  startPeriod <- x[which(startper=="start")]
-  endPeriod <- x[which(endper=="end")]
+  periods <- 1:sum(starts,na.rm=T)
+  startPeriod <- x[which(starts==1)]; endPeriod <- x[which(ends==1)]
 
   returndf <- data.frame(periods,startPeriod,endPeriod)
   returndf$id <- id
   returndf$burst <- burst
+
   return(returndf)
 }
+
+# extractPeriods <- function(x,sep=7,unit="days",id=NULL,burst=NULL){
+#
+#   s <- which(difftime(x[-1],x[-length(x)],units=unit)>sep)
+#
+#   startper <- rep(NA,length(x))
+#   endper <- rep(NA,length(x))
+#   startper[1] <- "start"
+#   endper[length(x)] <- "end"
+#
+#   if(length(s)>0){
+#     endper[s] <- "end"
+#     startper[s+1] <- "start"
+#   }
+#
+#   periods <- 1:length(which(startper=="start"))
+#   startPeriod <- x[which(startper=="start")]
+#   endPeriod <- x[which(endper=="end")]
+#
+#   returndf <- data.frame(periods,startPeriod,endPeriod)
+#   returndf$id <- id
+#   returndf$burst <- burst
+#   return(returndf)
+# }
 
 #' Transform a number of days into Years, Month, Day
 #'

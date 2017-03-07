@@ -24,3 +24,4 @@ Author: S. Chamaillé-Jammes ; Last update: 22/05/2013
 \examples{
 interpol.trajectory(xy,time,maxtime=120,nomove=FALSE)
 }
+

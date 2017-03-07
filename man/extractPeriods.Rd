@@ -26,3 +26,7 @@ a dataframe with all periods and their date of begin (startPeriod) and end (endP
 \examples{
 extractPeriods(x)
 }
+\author{
+Simon Chamaille-Jammes, \email{simon.chamaille@cefe.cnrs.fr}
+}
+

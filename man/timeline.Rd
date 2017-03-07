@@ -37,3 +37,4 @@ a \code{\link{timeline}}
 data("hwzebra")
 timeline(hwzebra)
 }
+

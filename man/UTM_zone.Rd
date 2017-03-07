@@ -21,3 +21,4 @@ locations given. Modified from Cyril Bernard.
 \examples{
 UTM_zone(45,12)
 }
+

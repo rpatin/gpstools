@@ -16,6 +16,7 @@
 #' data("hwzebra")
 #' timeline(hwzebra)
 #' @export
+#'
 #
 # data("hwzebra")
 # df <- hwzebra;rm(hwzebra)

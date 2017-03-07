@@ -19,3 +19,4 @@ of 17576 elements
 \examples{
 GetLetter(n)
 }
+

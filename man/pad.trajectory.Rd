@@ -54,3 +54,7 @@ to subsample trajectories.
 \examples{
 pad.trajectory(xy,time,date.ref,dt,tol,correction.xy="cs",returnltraj=TRUE,idtraj="Zebra12",bursttraj="Zebra12_1h",Index)
 }
+\author{
+Simon Chamaille-Jammes, \email{simon.chamaille@cefe.cnrs.fr}
+}
+

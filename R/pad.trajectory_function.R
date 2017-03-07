@@ -33,6 +33,7 @@
 #' @examples
 #' pad.trajectory(xy,time,date.ref,dt,tol,correction.xy="cs",returnltraj=TRUE,idtraj="Zebra12",bursttraj="Zebra12_1h",Index)
 #' @export
+#' @author Simon Chamaille-Jammes, \email{simon.chamaille@cefe.cnrs.fr}
 
 
 # tmp <- pad.trajectory(xy = cbind(df$x,df$y),time = df$dateTime,date.ref = start,dt = sampling_rate,tol=tol,idtraj=first(df$id),bursttraj = first(df$burst),Index=df$Indexing,correction.xy = "none",max_sampling = 20) # Crée une sequence de temps régulière et assigne à chaque pas de temps le point GPS le plus proche <3min d'écart.
