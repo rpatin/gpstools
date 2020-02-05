@@ -42,8 +42,8 @@
 pad.trajectory <- function(xy, time, date.ref, dt, tol, correction.xy=c("none", "cs"), returnltraj=FALSE, idtraj=NULL, bursttraj=NULL, Index=NULL,max_sampling=NULL){
 
   if (isTRUE(returnltraj) & (is.null(idtraj) | is.null(bursttraj))) {
-      cat("Please provide idtraj and burstraj, they are needed in order to return ltraj objects")
-      return(NULL)
+    cat("Please provide idtraj and burstraj, they are needed in order to return ltraj objects")
+    return(NULL)
   }
 
   # create a vector of all times at which locations should have been acquired
@@ -68,7 +68,6 @@ pad.trajectory <- function(xy, time, date.ref, dt, tol, correction.xy=c("none", 
   }
 
   for (i in 1:length(time)) {
-
     if(!is.null(max_sampling)) {
       n <- min(length(alltimes),n+ceiling(diffrealtime[i]/dt))
     }
@@ -79,7 +78,7 @@ pad.trajectory <- function(xy, time, date.ref, dt, tol, correction.xy=c("none", 
       if (is.na(paddedxy[id, 1])) {
         # has another real point already be placed at this expected loc?
         realtimes[id] <-  time[i]
-        paddedxy[id, ] <- xy[i, ] # if not, then place this one
+        paddedxy[id, ] <- as.matrix(xy[i, ]) # if not, then place this one
         if (!is.null(Index)) {
           indices[id] <- Index[i]
           # and place corresponding Index
