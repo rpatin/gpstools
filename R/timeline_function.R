@@ -10,7 +10,10 @@
 #' @param actdf a dataframe (optionnal) for adding activity duration. Must contains idcol and burstcol.
 #' @param acttimecol colname for dateTime in actdf
 #' @param sep maximum time between two locations to consider them in the same sequence
-#' @param unit time unit of sep
+#' @param unit time unit of `sep`
+#' @param sorting_color TRUE or FALSE, whether plot should be sorted by color
+#'   and date (TRUE) or just date (FALSE)
+#' @param min_plot_duration minimum time to be plotted in days
 #' @return a \code{\link{timeline}}
 #' @examples
 #' data("hwzebra")
@@ -36,7 +39,17 @@
 
 # load("../workspace_timeline.rda")
 
-timeline <- function(df,burstcol="burstname",idcol="id",timecol="expectTime",color=NULL,actdf=NULL,acttimecol="dateTime",sep=7,unit='days') {
+timeline <- function(df,
+                     burstcol="burstname",
+                     idcol="id",
+                     timecol="expectTime",
+                     color=NULL,
+                     actdf=NULL,
+                     acttimecol="dateTime",
+                     sep=7,
+                     unit='days',
+                     sorting_color = FALSE,
+                     min_plot_duration) {
 
   evalstr <- paste("df <- dplyr::arrange(df,",idcol,",",burstcol,",",timecol,")",sep="")
   eval(parse(text=evalstr))
@@ -54,11 +67,29 @@ timeline <- function(df,burstcol="burstname",idcol="id",timecol="expectTime",col
           unit = unit
         )
     })",sep="")))
+
+
+
   out.split <- split(out,out[,idcol])
-  sorting <- lapply(out.split,function(x){x <- dplyr::arrange(x,startPeriod)
-  return(data.frame(id=dplyr::first(x[,idcol]),start=dplyr::first(x$startPeriod)))})
+  sorting <- lapply(out.split,function(x){
+    if(sorting_color){
+      x <- dplyr::arrange(x, burst, startPeriod)
+      return(data.frame(id=dplyr::first(x[,idcol]),
+                        burstsort = dplyr::first(x$burst),
+                        start=dplyr::first(x$startPeriod)))
+    } else {
+      x <- dplyr::arrange(x, startPeriod)
+      return(data.frame(id=dplyr::first(x[,idcol]),
+                        start=dplyr::first(x$startPeriod)))
+    }
+  })
   sort <- do.call('rbind',sorting)
-  sort <- dplyr::arrange(sort,start)
+
+  if(sorting_color){
+    sort <- dplyr::arrange(sort,burstsort,start)
+  } else {
+    sort <- dplyr::arrange(sort,start)
+  }
   sort$y <- GetLetter(nrow(sort))
 
   sort <- dplyr::arrange(sort,y)
@@ -84,6 +115,9 @@ timeline <- function(df,burstcol="burstname",idcol="id",timecol="expectTime",col
     out.act2 <- dplyr::arrange(out.act2,plotid)
   } else {
     out.act2 <- NA
+  }
+  if(!missing(min_plot_duration)){
+    out2 <- mutate(out2, endPeriod = endPeriod + lubridate::days(min_plot_duration))
   }
   output <- list("main"=out2,
                  "activity"=out.act2)
